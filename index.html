@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>o-dissection</title>
+    </head>
+    <body>
+        <header><h1>o-dissection</h1></header>
+        <p>
+            Main text:
+            <br/>
+            <textarea id="main_text"></textarea>
+        </p>
+        <p>
+            Remove (case-insensitive; newline delimited; will sort for you):
+            <br/>
+            <textarea style="height:400px;" cols="100" id="filter_text"></textarea>
+        </p>
+        <p>
+            Output:
+            <br/>
+            <textarea id="output"></textarea>
+        </p>
+        <p>
+            <button onclick="
+                
+                let words_to_filter = 
+                    document.getElementById('filter_text').value.split('\n').filter(word => word.trim().length > 0);
+
+
+                let main_text = 
+                    document.getElementById('main_text').value;
+                
+                let reg;
+
+                words_to_filter.forEach(function(w) {
+                    reg = new RegExp('(?<![a-zA-Z])'+w+'(?![a-zA-Z])', 'ig');
+                    main_text = main_text.replace(reg, '');
+                });
+                
+                document.getElementById('output').value = main_text;
+
+                document.getElementById('filter_text').value = words_to_filter.sort().join('\n');
+            ">
+                Do the deed
+            </button>
+        </p>
+    </body>
+</html>
